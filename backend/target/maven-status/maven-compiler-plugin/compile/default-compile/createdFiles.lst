@@ -11,6 +11,7 @@ com\internship\tool\scheduler\ComplianceScheduler.class
 com\internship\tool\controller\TestController.class
 com\internship\tool\repository\ComplianceRepository.class
 com\internship\tool\service\EmailService.class
+com\internship\tool\config\OpenApiConfig.class
 com\internship\tool\service\FileService.class
 com\internship\tool\entity\Compliance.class
 com\internship\tool\config\RedisConfig.class

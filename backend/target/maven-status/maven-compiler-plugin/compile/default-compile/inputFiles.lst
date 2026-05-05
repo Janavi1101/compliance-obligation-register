@@ -6,6 +6,7 @@ C:\Users\janavi\JANAVI DOCUMENTS\Internship\compliance-obligation-register\backe
 C:\Users\janavi\JANAVI DOCUMENTS\Internship\compliance-obligation-register\backend\src\main\java\com\internship\tool\ToolApplication.java
 C:\Users\janavi\JANAVI DOCUMENTS\Internship\compliance-obligation-register\backend\src\main\java\com\internship\tool\service\ComplianceService.java
 C:\Users\janavi\JANAVI DOCUMENTS\Internship\compliance-obligation-register\backend\src\main\java\com\internship\tool\config\JwtAuthFilter.java
+C:\Users\janavi\JANAVI DOCUMENTS\Internship\compliance-obligation-register\backend\src\main\java\com\internship\tool\config\OpenApiConfig.java
 C:\Users\janavi\JANAVI DOCUMENTS\Internship\compliance-obligation-register\backend\src\main\java\com\internship\tool\exception\GlobalExceptionHandler.java
 C:\Users\janavi\JANAVI DOCUMENTS\Internship\compliance-obligation-register\backend\src\main\java\com\internship\tool\repository\UserRepository.java
 C:\Users\janavi\JANAVI DOCUMENTS\Internship\compliance-obligation-register\backend\src\main\java\com\internship\tool\service\FileService.java

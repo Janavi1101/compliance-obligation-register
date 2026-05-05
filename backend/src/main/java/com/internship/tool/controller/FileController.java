@@ -1,15 +1,23 @@
 package com.internship.tool.controller;
 
-import com.internship.tool.entity.FileDocument;
-import com.internship.tool.service.FileService;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-import org.springframework.core.io.*;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.*;
+import com.internship.tool.entity.FileDocument;
+import com.internship.tool.service.FileService;
 
 @RestController
 @RequestMapping("/api/files")
@@ -21,13 +29,16 @@ public class FileController {
         this.service = service;
     }
 
-    // ✅ POST /upload
-    @PostMapping("/upload")
-    public ResponseEntity<FileDocument> upload(@RequestParam("file") MultipartFile file) throws Exception {
-        return ResponseEntity.ok(service.uploadFile(file));
+    // ✅ Upload file
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<FileDocument> upload(
+            @RequestParam("file") MultipartFile file) throws Exception {
+
+        FileDocument savedFile = service.uploadFile(file);
+        return ResponseEntity.ok(savedFile);
     }
 
-    // ✅ GET /files/{id}
+    // ✅ Download file by ID
     @GetMapping("/{id}")
     public ResponseEntity<Resource> download(@PathVariable Long id) throws Exception {
 
@@ -36,9 +47,16 @@ public class FileController {
         Path path = Paths.get(doc.getFilePath());
         Resource resource = new UrlResource(path.toUri());
 
+        if (!resource.exists()) {
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"" + doc.getOriginalName() + "\"")
+                .contentType(MediaType.parseMediaType(doc.getFileType()))
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + doc.getOriginalName() + "\""
+                )
                 .body(resource);
     }
 }

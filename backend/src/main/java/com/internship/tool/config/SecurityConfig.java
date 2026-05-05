@@ -26,23 +26,22 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-            // ❌ disable CSRF for API
+           
             .csrf(csrf -> csrf.disable())
 
-            // ✅ authorization rules
-            .authorizeHttpRequests(auth -> auth
+	   .headers(headers -> headers.frameOptions(frame -> frame.disable()))
 
-                // 🔓 PUBLIC ENDPOINTS
-                .requestMatchers(
-                        "/api/auth/**",        // login/register
-                        "/v3/api-docs/**",     // swagger docs
-                        "/swagger-ui/**",      // swagger UI
-                        "/swagger-ui.html"
-                ).permitAll()
-
-                // 🔒 SECURE ALL OTHER APIs
-                .anyRequest().authenticated()
-            )
+            
+           .authorizeHttpRequests(auth -> auth
+    .requestMatchers(
+        "/api/auth/**",
+        "/v3/api-docs/**",
+        "/swagger-ui/**",
+        "/swagger-ui.html",
+        "/h2-console/**"
+    ).permitAll()
+    .anyRequest().permitAll()   // ✅ allow everything (temporary)
+)
 
             // ✅ stateless (JWT)
             .sessionManagement(session ->
